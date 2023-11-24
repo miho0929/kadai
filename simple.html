@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Firebase:v9:Chatアプリ</title>
+</head>
+<body>
+
+<!-- コンテンツ表示画面 -->
+
+<div>
+    <div> 名前：<input type="text" id="uname"> </div>
+    <div>
+        <textarea id="text" cols="30" rows="10"></textarea>
+        <button id="send">送信</button>
+    </div>
+    <div id="output" style="overflow: auto; height: 300px;"></div>
+</div>
+<!--/ コンテンツ表示画面 -->
+
+
+
+<!-- JQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- JQuery -->
+
+
+<!--** 以下Firebase **-->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import { getDatabase, ref, push, set, update, onChildAdded, onChildChanged, remove, onChildRemoved } 
+    from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBzzyBxfPdZwdr4RTppFM5JmWyssUdZ0WI",
+        authDomain: "sample-a8451.firebaseapp.com",
+        projectId: "sample-a8451",
+        storageBucket: "sample-a8451.appspot.com",
+        messagingSenderId: "408048057065",
+        appId: "1:408048057065:web:0e9534b264b419e6688e78"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig); //initializeApp関数を使ってfirebaseにアクセス
+    const db = getDatabase(app); //getDatabase関数でリアルタイムデータベースに接続
+    const dbRef = ref(db, "chat"); //chatを監視するよー
+
+
+
+
+
+    //メッセージ送る
+    $("#send").on("click", function () {
+        const msg = {
+            uname: $("#uname").val(),
+            text: $("#text").val(),
+            today: new Date().toISOString() // 日時をISO文字列で保存
+        };
+        //console.log(msg);
+        const newPostRef = push(dbRef); //ユニークキーを生成
+        //console.log(newPostRef);
+        set(newPostRef,msg);
+    }); 
+
+    onChildAdded(dbRef, function(data){
+        const msg = data.val(); //これしないとオブジェクト変数にならない
+        const key = data.key; //ユニークキー
+        
+        const today = new Date(msg.today);
+        const formattedToday = today.toLocaleString();
+
+        let h = '<p id="'+key+'">';
+            h += msg.uname + ' - ' + formattedToday; // ユーザー名表示
+            h += '<br>';
+            //h += msg.text;
+            //h +='</p>';
+            h += '<span contentEditable="true" id="'+key+'_update">'+msg.text+'</span>'; //contentEditable変更できるやつ
+            h += '<span class="remove" data-key="'+key+'">🚮</span>'; //removeをクリックしたらこのkeyを取得して、、
+            h += '<span class="update" data-key="'+key+'">🆙</span>';
+            h += '</p>';
+            $("#output").prepend(h);
+    });
+
+    //削除イベント
+    $("#output").on("click", ".remove", function(){
+        const key =$(this).attr("data-key"); //thisはクリックした場所
+        const remove_item = ref(db,"chat/"+key); // chatのなかのユニークキーを指定
+        remove(remove_item); //firebaseデータ削除関数 
+    });
+
+    //更新イベント
+    $("#output").on("click", ".update", function(){
+        const key = $(this).attr("data-key");
+        update(ref(db, "chat/"+key), {
+                text: $("#"+key+'_update').html()
+        });
+    });
+
+    //削除処理がfirebase側で実行されたらイベント発生！
+    onChildRemoved(dbRef, (data) => {
+        $("#"+data.key).remove(); //DOM操作関数（対象を削除）
+    });
+
+    //更新処理がfirebase側で実行されたらイベント発生！
+    onChildChanged(dbRef, (data) => {
+        $("#"+data.key+'_update').html(data.val().text);
+        $("#"+data-key+'_update').fadeOut(800).fadeIn(800);
+    });
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
