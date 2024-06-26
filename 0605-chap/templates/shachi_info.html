@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }} の情報</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="title">{{ name }} の情報</h1>
+        <img src="{{ url_for('static', filename=shachi_image) }}" alt="{{ name }}" class="img-fluid">
+        <p>{{ summary }}</p>
+        <a href="{{ url_for('shachi_dict') }}" class="btn btn-warning mt-3">シャチ図鑑に戻る</a>
+        <a href="/" class="btn btn-primary mt-3">トップに戻る</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>履歴</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="title">履歴</h1>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>日時</th>
+                    <th>シャチの名前</th>
+                    <th>水族館</th>
+                    <th>予想した名前</th>
+                    <th>予想した水族館</th>
+                    <th>名前結果</th>
+                    <th>水族館結果</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                <tr>
+                    <td>{{ result[7] }}</td>
+                    <td>{{ result[1] }}</td>
+                    <td>{{ result[2] }}</td>
+                    <td>{{ result[3] }}</td>
+                    <td>{{ result[4] }}</td>
+                    <td>{{ '正解' if result[5] else '不正解' }}</td>
+                    <td>{{ '正解' if result[6] else '不正解' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/" class="btn btn-primary mt-3">トップに戻る</a>
+    </div>
+</body>
+</html>

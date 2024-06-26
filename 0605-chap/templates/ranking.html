@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ランキング</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="title">ランキング</h1>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>ユーザー</th>
+                    <th>正解数</th>
+                    <th>挑戦回数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user, score in results %}
+                <tr>
+                    <td>{{ user }}</td>
+                    <td>{{ score[1] }}</td>
+                    <td>{{ score[2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/" class="btn btn-primary mt-3">トップに戻る</a>
+    </div>
+</body>
+</html>

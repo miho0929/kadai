@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シャチの名前と水族館当てゲーム</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="text-center mt-5">
+            <h1 class="title">シャチの名前と水族館当てゲーム</h1>
+            <div class="mt-4">
+                <img src="{{ url_for('static', filename=shachi_image) }}" alt="シャチの写真" class="img-fluid">
+            </div>
+            <form action="/result" method="POST" class="mt-4">
+                <div class="form-group">
+                    <label for="name">シャチの名前を入力してください:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="aquarium">シャチがいる水族館を選んでください:</label>
+                    <select class="form-control" id="aquarium" name="aquarium" required>
+                        <option value="">選択してください</option>
+                        <option value="鴨川シーワールド">鴨川シーワールド</option>
+                        <option value="名古屋港水族館">名古屋港水族館</option>
+                        <option value="神戸須磨シーワールド">神戸須磨シーワールド</option>
+                    </select>
+                </div>
+                <input type="hidden" name="correct_name" value="{{ shachi_name }}">
+                <button type="submit" class="btn btn-primary mt-3">送信</button>
+            </form>
+            <div class="mt-4">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('history') }}" class="btn btn-info">履歴を見る</a>
+                    <a href="{{ url_for('ranking') }}" class="btn btn-success">ランキングを見る</a>
+                    <a href="{{ url_for('shachi_dict') }}" class="btn btn-warning">シャチ図鑑</a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-danger">ログアウト</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-primary">ログイン</a>
+                    <a href="{{ url_for('register') }}" class="btn btn-secondary">登録</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

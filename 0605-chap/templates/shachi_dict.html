@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シャチ図鑑</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="title">シャチ図鑑</h1>
+        <ul class="list-group mt-4">
+            {% for shachi in shachis %}
+                <li class="list-group-item">
+                    <a href="{{ url_for('shachi_info', name=shachi) }}">{{ shachi }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="/" class="btn btn-primary mt-3">トップに戻る</a>
+    </div>
+</body>
+</html>

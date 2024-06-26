@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結果</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="title">結果</h1>
+        <p>シャチの名前: {{ correct_name }} ({{ '正解' if name_result else '不正解' }})</p>
+        <p>水族館: {{ correct_aquarium }} ({{ '正解' if aquarium_result else '不正解' }})</p>
+        <h2>シャチの情報</h2>
+        <p>{{ shachi_summary }}</p>
+        <a href="/" class="btn btn-primary mt-3">もう一度挑戦</a>
+        <a href="{{ url_for('history') }}" class="btn btn-info mt-3">履歴を見る</a>
+        <a href="{{ url_for('ranking') }}" class="btn btn-success mt-3">ランキングを見る</a>
+        <a href="{{ url_for('shachi_dict') }}" class="btn btn-warning mt-3">シャチ図鑑</a>
+    </div>
+</body>
+</html>
