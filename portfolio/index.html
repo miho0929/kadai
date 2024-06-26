@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ポートフォリオサイト</title>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body class="loading">
+    <!-- ローディングスクリーンのマークアップ -->
+    <div id="preloader">
+        <img src="yena.gif" alt="Loading..." />
+    </div>
+
+    <!-- ハンバーガーメニューここから -->
+    <header>
+        <div class="header-logo-menu">
+            <div class="logo">MIHO ABE</div>
+            <div id="nav-drawer">
+                <input id="nav-input" type="checkbox" class="nav-unshown">
+                <label id="nav-open" for="nav-input"><span></span></label>
+                <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+                <div id="nav-content">
+                    <ul class="category">
+                        <li class="category-title"><a href="#home">Home</a></li>
+                        <li class="category-title"><a href="#about">About Me</a></li>
+                        <li class="category-title"><a href="#works">Works</a></li>
+                        <li class="category-title"><a href="#like">Like</a></li>
+                        <li class="category-title"><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ハンバーガーメニューここまで -->
+
+    <!-- ここに写真を追加 -->
+    <div class="hero">
+        <img src="sky01.png" alt="ホームの写真" class="hero-image">
+    </div>
+
+    <main>
+        <section id="home">
+            <h2>Home</h2>
+            <p>Welcome to my portfolio site.</p>
+        </section>
+
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="profile">
+                <p><span class="highlight">MIHO ABE</span><br>student | Otsuma Women's University</p>
+                <p><span class="highlight">学歴</span><br>都立富士高等学校附属中学校 2016年4月 入学
+                    <br>都立富士高等学校附属中学校 2019年3月 卒業
+                    <br>都立富士高等学校 2019年4月 入学
+                    <br>都立富士高等学校 2022年3月 卒業
+                    <br>大妻女子大学 社会情報学部社会情報学科情報デザイン専攻 2022年4月 入学
+                    <br>大妻女子大学 社会情報学部社会情報学科情報デザイン専攻 2026年3月 卒業見込み</p>
+                <p><span class="highlight">出身</span><br>東京</p>
+                <p><span class="highlight">誕生日</span><br>2004年1月30日</p>
+                <p><span class="highlight">ゼミ</span><br>落合友四郎ゼミ</p>
+                <p><span class="highlight">得意なこと</span><br>早起き、掃除</p>
+                <p><span class="highlight">得意料理</span><br>卵焼き、ブリの照り焼き、ロールキャベツ</p>
+                <p><span class="highlight">好きな食べ物</span><br>プリン、キュウリ</p>
+                <p><span class="highlight">好きな色</span><br>水色、黄色、桃色</p>
+            </div>
+        </section>
+
+        <section id="works">
+            <h2>Works</h2>
+            <div class="container">
+                <div class="item">
+                    <img src="design01.png" alt="Project 1">
+                    <h3>いろいろな錯角</h3>
+                    <p>立体平面の錯角だけでなく、立体もよくみるとへこんでいる部分がへこんでいないように見えてくるのがポイント。</p>
+                </div>
+                <div class="item">
+                    <img src="design02.png" alt="Project 1">
+                    <h3>補色と明度と彩度の変化</h3>
+                    <p>月の図は補色。文字は明度と彩度の変化。上から下になるにつれて明度は低くなり、彩度は高くなる。２つの立体は上面と影の彩度が違う。上面は黄色が彩度が高く、青が彩度が低い。影は黄色が彩度が低く、青が彩度が高い。一番下は色相の変化。</p>
+                </div>
+                <div class="item">
+                    <img src="design03.png" alt="Project 1">
+                    <h3>キャラメルアイスクリームのロゴ</h3>
+                    <p>ラクダのミルクから作ったキャラメルアイスクリームのお店のロゴマーク。caramelとcamelをかけている笑。色は補色を意識して、フォントにもこだわった。</p>
+                </div>
+                <div class="item">
+                    <img src="design04.png" alt="Project 1">
+                    <h3>ピクトグラム</h3>
+                    <p>パンダ、猫、ウサギ、犬</p>
+                </div>
+                <div class="item">Project 2</div>
+                <div class="item">Project 3</div>
+            </div>
+        </section>
+
+        <section id="like">
+            <h2>Like</h2>
+            <p>クリックして写真を閲覧できます</p>
+            <div class="container">
+                <div class="item">
+                    <a href="travel.html">
+                        <img src="travel.jpg" alt="Travel" class="uniform-image">
+                        <h3>旅行</h3>
+                        <p>このプロジェクトの簡単な説明です。何をしたのか、どの技術が使われているかなど。</p>
+                    </a>
+                </div>
+                <div class="item">
+                    <img src="sanpo.jpg" alt="Project 2" class="uniform-image">
+                    <h3>お散歩</h3>
+                    <p>このプロジェクトの簡単な説明です。何をしたのか、どの技術が使われているかなど。</p>
+                </div>
+                <div class="item">
+                    <img src="pengin.jpg" alt="Project 2" class="uniform-image">
+                    <h3>水族館</h3>
+                    <p>ペンギン、ラッコ。</p>
+                </div>
+                <div class="item">
+                    <img src="orca.jpg" alt="Project 2" class="uniform-image">
+                    <h3>シャチ</h3>
+                    <p>このプロジェクトの簡単な説明です。何をしたのか、どの技術が使われているかなど。</p>
+                </div>
+                <div class="item">
+                    <img src="music.jpg" alt="Project 2" class="uniform-image">
+                    <h3>Music</h3>
+                    <p>izone yena</p>
+                </div>
+                <div class="item">
+                    <img src="animal.jpg" alt="Project 2" class="uniform-image">
+                    <h3>動物</h3>
+                    <p>猫カフェ、サモエドカフェ</p>
+                </div>
+                <div class="item">Project 4</div>
+                <div class="item">Project 5</div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>ご質問やご相談がございましたら、以下の連絡先までお気軽にご連絡ください。</p>
+            <p>Email: s1322104@example.com</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 MIHO ABE. All Rights Reserved.</p>
+    </footer>
+
+    <!-- 初めのgif表示するscript -->
+    <script>
+        // ページのロードが完了した後の処理
+        window.addEventListener('load', function() {
+            // ローディングスクリーンにクリックイベントリスナーを追加
+            document.getElementById('preloader').addEventListener('click', function() {
+                document.getElementById('preloader').style.display = 'none';
+                document.body.classList.remove('loading');
+            }, 7000); // 7000ミリ秒（7秒）
+        });
+    </script>
+</body>
+
+</html>
