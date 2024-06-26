@@ -1,0 +1,76 @@
+<!-- //const url = "https://www.googleapis.com/books/v1/volumes?q=javascript"; -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoogleBooksでAjaxを学ぶ</title>
+    <style>
+        td{
+            border-bottom: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Book検索</h1>
+    <div>
+        <input type="text" id="key">
+        <button id="send">検索</button>
+    </div>
+    <div>
+        <table id="list">
+            <tr>
+                <td style="width:400px">書籍名</td>
+                <td style="width:200px">出版社</td>
+                <td style="width:400px">画像</td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <script>
+    $("#send").on("click",function(){
+        const url = "https://www.googleapis.com/books/v1/volumes?q="+$("#key").val();
+        $.ajax({
+            url: url,
+            dataType: "json"
+        }).done(function(data) {
+            //書籍名、出版社、サムネイル、リンク
+            console.log(data); //オブジェクトの中を確認
+
+            const len = data.items.length; //データの数を取得
+
+            let html;
+            for(let i=0; i<len; i++){
+
+                //undefind出ないようにする→出版社不明に置き換える
+                if (typeof data.items[i].volumeInfo.publisher == "undefined") {
+                    data.items[i].volumeInfo.publisher = "出版社（不明）";
+                }
+
+
+                const d = data;
+                html += `
+                    <tr>
+                        <td>${data.items[i].volumeInfo.title}</td>
+                        <td>${data.items[i].volumeInfo.publisher}</td>
+                        <td>
+                            <a target="_blank" href="${data.items[i].volumeInfo.infoLink}">
+                            <img src="${data.items[i].volumeInfo.imageLinks.thumbnail}"></td>
+                    </tr>
+                `;
+            }   
+            //table要素のid="list"に追加
+            $("#list").empty().hide().append(html).fadeIn(1000);
+
+        });
+    });
+    
+    
+    
+    </script>
+    
+</body>
+</html>
