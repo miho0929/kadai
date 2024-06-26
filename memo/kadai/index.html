@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>myMemoPad</title>
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/sample.css">
+</head>
+<body>
+
+<header>
+<h1>MemoPad</h1>
+</header>
+<main>
+    <input type="text" id="key">
+    <textarea id="memo"></textarea>
+    <ul>
+        <li id="save">Save</li>
+        <li id="clear">Clear</li>
+    </ul>
+</main>
+<table id="list">
+<!-- ここに追加データが挿入される -->
+</table>
+<script>
+//1.Save クリックイベント
+$("#save").on("click",function(){
+    const key = $("#key").val();      //key = text ((書かれたtextを取得
+    const value = $("#memo").val();   //value = memo ((書かれたmemoを取得
+    localStorage.setItem(key, value); //keyとvalueをlocalStageで永久的に保存
+    //const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>'; //htmlでkey,value行を表示
+    const html = '<tr><th>' + key + '</th><td class="editable" data-key="' + key + '">' + value + '</td><td class="delete" data-key="' + key + '">Delete</td></tr>';
+    $("#list").append(html);          //list に html を追加
+    //alert(memo);
+    //alert(key);
+    alert("OK");
+});
+
+//2.clear クリックイベント
+// $("#clear").on("click",function(){
+//     localStorage.clear();    //clearにする
+//     $("#list").empty();      //listを空にする
+//     const html = '<tr><th>'+key+'</th><td>'+value+'</td></tr>'; //htmlでkey,value行を作る
+//     $("#list").append(html); //list に html を追加
+// });
+
+// Clear クリックイベント
+$("#clear").on("click", function () {
+    localStorage.clear(); // データをクリア
+    $("#list").empty(); // listの内容を削除
+});
+
+
+//3.ページ読み込み：保存データ取得表示
+// for(let i=0; i<localStorage.length; i++){
+//     const key = localStorage.key(i);        //key名
+//     const value = localStorage.getItem(key);//value
+// }
+
+
+//3.ページ読み込み：保存データ取得表示
+//追加データ削除★
+for (let i = 0; i < localStorage.length; i++) { //*lengthだから今保存されてるデータの数
+    const key = localStorage.key(i);            // key = text textの(i)番目を取得
+    const value = localStorage.getItem(key);    // value = memo //key(text)に対応するvalue(memo)を取得
+
+    // HTML文字列を生成して、メモのキー、値、削除ボタンを表示
+    //htmlで<tr>行を作る // (key(text),value(memo),deleteの行が作られる)
+    const html = '<tr><th>' + key + '</th><td class="editable" data-key="' + key + '">' + value + '</td><td class="delete" data-key="' + key + '">Delete</td></tr>';
+    //<td class="editable" data-key="' + key + '">' + value + '</td>  : value(memo)の内容を表すHTML要素
+    //★ editableというクラスがつけてある。CSSスタイルやJavaScriptの操作に使用できるやつ。
+    //data-key="' + key + '" でkey(text)のデータたちをhtmlに保管
+
+    //<td class="delete" data-key="' + key + '">Delete</td>  : value(memo)の削除ボタンを表すHTML要素
+    //★ daleteというクラスがつけてある。CSSスタイルやJavaScriptの操作に使用できるやつ。
+    //Deleteっていうテキストが表示される
+
+    $("#list").append(html);    // list に html を追加
+}
+
+// データを削除する処理を追加
+$("#list").on("click", ".delete", function () { //deleteボタンのクリックイベント
+    const key = $(this).data("key");            //クリックされたところのkey(text)を取得 //$(this)はクリックされた要素
+    localStorage.removeItem(key);               //localStorageからkeyを削除
+    $(this).closest("tr").remove();             //クリックしたところの<tr>行を削除
+});
+
+
+//データ変更
+// メモをクリックして編集可能にする処理を追加
+$("#list").on("click", ".editable", function () { //value(memo)のクリックイベント //classで名前つけた人
+     const key = $(this).data("key");              //クリックされたところのkey(text)を取得 //$(this)はクリックされた要素
+     const value = $(this).text(); // 現在の値を取得
+     const newValue = prompt("Edit memo", value); // プロンプトを使って新しい値を入力
+     if (newValue !== null) {
+         $(this).text(newValue); // 新しい値を表示
+         localStorage.setItem(key, newValue); // データを更新
+     }
+});
+
+
+
+
+</script>
+<footer><small>クリックでメモ内容変更</small></footer>
+</body>
+</html>
