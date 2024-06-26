@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/sample.css">
+<title>クイズ練習（複数）</title>
+</head>
+<body>
+
+<header>
+    <h1>あべみほクイズ</h1>
+    <h2 id="questionNumber">問題数</h2>
+
+</header>
+
+<main>
+  <p id="quest">ここに問題が出題されます</p>
+  <p>
+    <input type="radio" name="toi" value="1"><span id="toi1">選択肢１</span>
+    <input type="radio" name="toi" value="2"><span id="toi2">選択肢２</span>
+    <input type="radio" name="toi" value="3"><span id="toi3">選択肢３</span>
+  </p>
+</main>
+
+<footer>フッター</footer>
+<script>
+//ここから記述領域［START］
+  //以下に配列を記述してください。
+
+
+  //問題文[配列]
+  const mondaibun = [
+    "あべみほの最も好きな食べものは何？",
+    "あべみほが飼っている動物は何？",
+    "あべみほの血液型は何？",
+    "あべみほは何人兄弟？",
+    "あべみほの誕生日はいつ？",
+    "あべみほの好きな色は何？"
+];
+    
+  //回答選択肢[多重配列]
+  const toi = [
+  ["肉","野菜","汁"],
+  ["犬","ねこ","インコ"],
+  ["A","B","O"],
+  ["一人っ子","２人","３人"],
+  ["0130","0830","1130"],
+  ["黄色","水色","みどり"]
+  ];
+    
+  //答え[配列]
+  const ans = [3,2,3,3,1,2];
+
+
+
+
+  //1.最初の問題文＆回答選択肢＆回答値を設定
+  let i = 0;
+  let b = false;
+
+  function display(){ //表示する関数
+  $("#questionNumber").text("問題" + (i+1));
+  $("#quest").text( mondaibun[i] ); //"#quest"のところに問題文[i]を表示
+  $("#toi1").text(toi[i][0]);
+  $("#toi2").text(toi[i][1]);
+  $("#toi3").text(toi[i][2]);
+  }
+  display();
+
+
+  let kazu = 0; //正解数カウント
+
+  //2.ラジオボタンをクリックしたらイベント発生！(クリックイベント)
+  $("[name=toi]").on("click",function(){
+    if(b){
+      return;
+    }
+    const v = $(this).val(); // 今起きたイベントが場所の値をとる
+    if (ans[i] == v) {
+      $("h1").text("正解！");
+      kazu++;//正解数プラス１
+    } else {
+      $("h1").text("不正解");
+    }
+    
+
+  //   i++; //配列に入れるiが1プラスされます
+  //   $("#quest").text( qs[i] );
+  //   $("#toi1").text(toi[i][0]);
+  //   $("#toi2").text(toi[i][1]);
+  //   $("#toi3").text(toi[i][2]);
+  // });
+
+    // 次の質問があれば表示
+    if (i < mondaibun.length - 1) {
+      i++;
+      display(); //もう一回、次の問題を表示
+    } else {
+      // 全ての質問が終了した場合
+      alert("終了");
+      $("h1").text("正解数："+kazu+" / "+mondaibun.length); //正解数を表示
+      if(kazu>=5){
+        $("#questionNumber").text("😍あなたはあべみほの大親友😍");
+      }else if(kazu>=2){
+        $("#questionNumber").text("💕あなたはあべみほの友達💕");
+      }else{
+        $("#questionNumber").text("😊あなたはあべみほの知り合い😊");
+      }
+      b = true;
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+//ここまでが記述領域［END］
+</script>
+</body>
+</html>
