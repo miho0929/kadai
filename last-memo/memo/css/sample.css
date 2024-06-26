@@ -1,0 +1,115 @@
+body {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 18px; /* フォントサイズを調整 */
+    width: 100%;
+    /* background-color: #f8f8f8; 新春の雰囲気に合った背景色 */
+    background-color: #f8f4d6;
+}
+
+header {
+    background-color: #bee4c8; /* ヘッダーの背景色を変更 */
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    padding: 10px 0; /* 上下のパディングを追加 */
+    height: 110px; /* 適切な高さに調整 */
+}
+
+h1 {
+    font-size: 150%; /* より大きなフォントサイズ */
+    color: #cc0000; /* 新春の赤い色 */
+}
+h2{
+    font-size: 100%;
+    color: #cc0000;
+}
+
+main {
+    width: 100%;
+    display: block;
+    position: relative;
+}
+
+/* ボタンの親要素に対するスタイル */
+main ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    /* justify-content: space-between; ボタンを親要素いっぱいに広げつつ、間隔を開ける */
+    width: 100%;
+    margin-top: 2px; /* 上部の間隔 */
+    margin-bottom: 0px; /* 下部の間隔 */
+}
+
+/* ボタンに対するスタイル */
+main li {
+    margin: 30px; /* ボタン同士の間隔 */
+}
+
+textarea{
+    margin: 10px 3%;
+    width: 95%;
+    height: 50px;
+    font-size:80%;
+    box-shadow: 3px 3px 3px 3px #555;
+    background-color:rgb(241, 239, 239);
+  }
+#key{
+      margin:0 3%;
+      width: 95%;
+      height: 25px;
+      font-size:80%;
+      background-color: rgb(241, 239, 239);
+      box-shadow: 3px 3px 3px 3px #555;
+  }
+
+ul {
+    padding: 10px 0; /* 上下のパディングを追加 */
+    margin: 0;
+    display: flex; /* フレックスボックスを使用 */
+    justify-content: center; /* 中央寄せ */
+}
+
+li {
+    list-style-type: none;
+    border: 1px solid #cc0000; /* 新春の赤い色のボーダー */
+    background-color: #fff;
+    margin: 0 5px; /* アイテム間のマージンを追加 */
+    padding: 8px 15px; /* アイテム内のパディングを追加 */
+    cursor: pointer;
+    color: #cc0000; /* 新春の赤い色 */
+    border-radius: 5px; /* 角を丸める */
+}
+
+li:hover {
+    background: #cc0000; /* ホバー時の背景色を変更 */
+    color: #fff;
+}
+
+
+
+    
+table {
+    margin: 2px ; /* 上下のマージンを追加 */
+    border: 1px solid #cc0000; /* テーブルのボーダー色を変更 */
+    width: 100%;
+}
+
+th {
+    width: 25%;
+    font-size: 22px;
+    background-color: #cc0000; /* ヘッダーの背景色を変更 */
+    border-bottom: 1px solid #cc0000; /* ボーダー色を変更 */
+    color: #fff; /* 文字色を変更 */
+    padding: 5px; /* パディングを追加 */
+}
+
+td {
+    font-size: 16px;
+    background-color: #f8f8f8; /* テーブルのセルの背景色を変更 */
+    border-bottom: 1px solid #cc0000; /* ボーダー色を変更 ,
+    テーブルの線！格子*/
+    padding: 10px; /* パディングを追加 */
+}
+

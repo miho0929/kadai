@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        #calendar {
+            display: flex;
+            gap: 5px;
+        }
+
+        .day {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .notes-container {
+            margin-top: 10px;
+        }
+
+        .note {
+            margin-top: 5px;
+        }
+
+        .edit-input {
+            width: 80%;
+            margin: 5px;
+        }
+
+        .edit-button {
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .delete-button {
+            cursor: pointer;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>カレンダー</h1>
+    </header>
+    <div id="navButtons">
+        <button id="backWeek">前の週</button>
+        <button id="todayButton">今日</button>
+        <button id="nextWeek">次の週</button>
+    </div>
+    <div id="calendar"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const calendarContainer = document.getElementById("calendar");
+            const nextWeekButton = document.getElementById("nextWeek");
+            const backWeek = document.getElementById("backWeek");
+            const todayButton = document.getElementById("todayButton");
+
+            let currentDate = new Date();
+            displayCalendar(currentDate);
+
+            //次の週クリックイベント
+            // nextWeekButton.addEventListener("click", function () {
+            //     currentDate.setDate(currentDate.getDate() + 7);
+            //     displayCalendar(currentDate);
+            // });
+            $("#nextWeek").on("click", function () {
+                currentDate.setDate(currentDate.getDate() + 7);
+                displayCalendar(currentDate);
+            });
+
+            //前の週クリックイベント
+            // backWeekButton.addEventListener("click", function () {
+            //     currentDate.setDate(currentDate.getDate() - 7);
+            //     displayCalendar(currentDate);
+            // });
+            $("#backWeek").on("click", function () {
+                currentDate.setDate(currentDate.getDate() - 7);
+                displayCalendar(currentDate);
+            });
+
+            //今日ボタンのクリックイベント
+            // todayButton.addEventListener("click", function () {
+            //     currentDate = new Date(); // Reset to today
+            //     displayCalendar(currentDate);
+            // });
+            $("#todayButton").on("click", function(){
+                currentDate = new Date(); // Reset to today
+                displayCalendar(currentDate);
+            });
+
+            function displayCalendar(startDate) {
+                calendarContainer.innerHTML = "";
+
+                for (let i = 0; i < 7; i++) {
+                    const day = new Date(startDate);
+                    day.setDate(startDate.getDate() + i);
+
+                    const dayElement = document.createElement("div");
+                    dayElement.classList.add("day");
+                    dayElement.innerHTML = `<p>${day.toLocaleDateString("en-US", { month: "numeric", day: "numeric" })} ${getDayOfWeek(day)}</p>`;
+
+                    const dayNotesContainer = document.createElement("div");
+                    dayNotesContainer.classList.add("notes-container");
+
+                    const eventInput = document.createElement("textarea");
+                    eventInput.classList.add("edit-input");
+                    eventInput.placeholder = "Enter event";
+
+                    const saveButton = document.createElement("button");
+                    saveButton.innerText = "Save";
+
+                    saveButton.addEventListener("click", function () {
+                        const eventText = eventInput.value;
+                        if (eventText.trim() !== "") {
+                            updateNotesContainer(dayNotesContainer, eventText);
+                            eventInput.value = "";
+                        }
+                    });
+
+                    dayNotesContainer.appendChild(eventInput);
+                    dayNotesContainer.appendChild(saveButton);
+
+                    dayElement.appendChild(dayNotesContainer);
+
+                    calendarContainer.appendChild(dayElement);
+                }
+            }
+
+            function getDayOfWeek(date) {
+                const daysOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
+                return daysOfWeek[date.getDay()];
+            }
+
+            function updateNotesContainer(container, eventText) {
+                const note = document.createElement("div");
+                note.classList.add("note");
+                note.innerHTML = `${eventText} <span class="edit-button" onclick="editNote(this)">Edit</span> <span class="delete-button" onclick="deleteNote(this)">Delete</span>`;
+                container.appendChild(note);
+            }
+
+            // Editボタンのクリックイベント
+            window.editNote = function (element) {
+                const note = element.parentNode;
+                const eventText = note.firstChild.nodeValue.trim();
+                const editInput = document.createElement("textarea");
+                editInput.classList.add("edit-input");
+                editInput.value = eventText;
+
+                const saveButton = document.createElement("button");
+                saveButton.innerText = "Save";
+
+                saveButton.addEventListener("click", function () {
+                    const newEventText = editInput.value;
+                    if (newEventText.trim() !== "") {
+                        note.innerHTML = `${newEventText} <span class="edit-button" onclick="editNote(this)">Edit</span> <span class="delete-button" onclick="deleteNote(this)">Delete</span>`;
+                    } else {
+                        note.remove(); // Remove the note if the edited text is empty
+                    }
+                });
+
+                note.innerHTML = "";
+                note.appendChild(editInput);
+                note.appendChild(saveButton);
+            };
+
+            // Deleteボタンのクリックイベント
+            window.deleteNote = function (element) {
+                const note = element.parentNode;
+                note.remove();
+            };
+        });
+    </script>
+</body>
+
+</html>

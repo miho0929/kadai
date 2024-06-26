@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>myTODOlist</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="css/sample.css">
+    <style>
+        .draggable {
+            cursor: move;
+        }
+
+        .task-slider {
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h3, h4 {
+            margin-bottom: 5px;
+        }
+
+        /* Add style for the buttons */
+        #omikuji-btn, #lucky-color-btn {
+            background-color: #cc0000;
+            color: #fff;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        #omikuji-btn {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+
+        #lucky-color-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+
+        /* おみくじresultの表示位置 */
+        /* Display area for おみくじ result */
+        #omikuji-result {
+            position: absolute;
+            top: 50px; /* 調整可能な距離 */
+            left: 5px;
+            font-size: 16px;
+        }
+
+        /* Display area for ラッキーカラー result */
+        #lucky-color-result {
+            position: absolute;
+            top: 50px; /* 調整可能な距離 */
+            right: 5px;
+            font-size: 16px;
+        }        
+
+        /* 画像の最大幅と高さを指定 */
+        .omikuji-image {
+            max-width: 200px; /* 例: 100ピクセルまで */
+            max-height: 150px; /* 例: 100ピクセルまで */
+        }    
+        .color-image {
+            max-width: 100px; /* 例: 100ピクセルまで */
+            max-height: 100px; /* 例: 100ピクセルまで */
+        } 
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>2024やりたいこと</h1>
+        <h2>TODOlist</h2>
+    </header>
+    <main>
+        <h3>やること</h3>
+        <textarea id="memo"></textarea>
+        <h4>期限</h4>
+        <input type="text" id="key">
+        <ul>
+            <li id="save">追加</li>
+            <li id="clear">全削除</li>
+        </ul>
+    </main>
+    <table id="list">
+        <tr>
+            <th>やること</th>
+            <th>期日</th>
+            <th>削除ボタン</th>
+            <th>進捗状況</th>
+        </tr>
+        <!-- ここに追加データが挿入される -->
+    </table>
+
+    <!-- Add buttons for おみくじ and ラッキーカラー -->
+    <button id="omikuji-btn">おみくじ</button>
+    <button id="lucky-color-btn">ラッキーカラー</button>
+
+    <!-- Display area for おみくじ result -->
+    <p id="omikuji-result"></p>
+
+    <!-- Display area for ラッキーカラー result -->
+    <p id="lucky-color-result"></p>    
+
+    <script>
+        // 1.追加 クリックイベント
+        $("#save").on("click", function () {
+            const key = $("#memo").val();
+            const value = $("#key").val();
+            localStorage.setItem(key, value);
+            const html = '<tr><th class="editable" data-key="' + key + '">' + key + '</th><td class="editable" data-key="' + key + '">' + value + '</td><td class="delete" data-key="' + key + '">Delete</td><td><input type="range" class="task-slider" min="1" max="10" value="3"></td></tr>';
+            $("#list").append(html);
+            alert("OK");
+
+            // 保存後に入力欄をクリア
+            $("#key").val('');
+            $("#memo").val('');
+        });
+
+        // 2.clear削除 クリックイベント
+        $("#clear").on("click", function () {
+            localStorage.clear();
+            $("#list").empty();
+        });
+
+        // 3.ページ読み込み：保存データ取得表示
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            const value = localStorage.getItem(key);
+
+            const html = '<tr><th class="editable" data-key="' + key + '">' + key + '</th><td class="editable" data-key="' + key + '">' + value + '</td><td class="delete" data-key="' + key + '">Delete</td><td><input type="range" class="task-slider" min="1" max="10" value="3"></td></tr>';
+            $("#list").append(html);
+        }
+
+        // データを削除する処理を追加
+        $("#list").on("click", ".delete", function () {
+            const key = $(this).data("key");
+            localStorage.removeItem(key);
+            $(this).closest("tr").remove();
+        });
+
+        //データ変更
+        $("#list").on("click", ".editable", function () {
+            const key = $(this).data("key");
+            const value = $(this).text();
+            const newValue = prompt("Edit memo", value);
+            if (newValue !== null) {
+                $(this).text(newValue);
+                localStorage.setItem(key, newValue);
+            }
+        });
+
+        // おみくじボタンの処理
+        $("#omikuji-btn").on("click", function () {
+            alert("おみくじが引かれました！");
+            // ここにおみくじの処理を追加
+
+            //乱数を生成１～５
+                const num = Math.ceil(Math.random() * 5);
+                if(num == 1){
+                    // $("#omikuji-result").html("大吉");
+                    $("#omikuji-result").html('<img src="daikichi.png" class="omikuji-image">');
+                }
+                if(num == 2){
+                    // $("#omikuji-result").html("中吉");
+                    $("#omikuji-result").html('<img src="chuukichi.png" class="omikuji-image">');
+                }
+                if(num == 3){
+                    // $("#omikuji-result").html("小吉");
+                    $("#omikuji-result").html('<img src="syoukichi.png" class="omikuji-image">');
+                }
+                if(num == 4){
+                    // $("#omikuji-result").html("吉");
+                    $("#omikuji-result").html('<img src="kichi.png" class="omikuji-image">');
+                }
+                if(num == 5){
+                    // $("#omikuji-result").html("凶");
+                    $("#omikuji-result").html('<img src="kyou.png" class="omikuji-image">');
+                }
+
+        });
+
+        // ラッキーカラーボタンの処理
+        $("#lucky-color-btn").on("click", function () {
+            alert("ラッキーカラーが表示されました！");
+            // ここにラッキーカラーの処理を追加
+            //乱数を生成１～５
+            const num = Math.ceil(Math.random() * 5);
+                if(num == 1){
+                    $("#lucky-color-result").html("赤");
+                    $("#lucky-color-result").html('<img src="red.png" class="color-image">');
+                }
+                if(num == 2){
+                    $("#lucky-color-result").html("白");
+                    $("#lucky-color-result").html('<img src="white.png" class="color-image">');
+                }
+                if(num == 3){
+                    $("#lucky-color-result").html("黒");
+                    $("#lucky-color-result").html('<img src="black.png" class="color-image">');
+                }
+                if(num == 4){
+                    $("#lucky-color-result").html("青");
+                    $("#lucky-color-result").html('<img src="blue.png" class="color-image">');
+                }
+                if(num == 5){
+                    $("#lucky-color-result").html("緑");
+                    $("#lucky-color-result").html('<img src="green.png" class="color-image">');
+                }
+    //             if(num==3){
+    //     // echo.innerHTML="小吉";
+    //     echo.innerHTML='<img src="omikuji_syoukichi.png">';
+    // }                        
+        });
+    </script>
+    <footer><small>G's</small></footer>
+</body>
+</html>
