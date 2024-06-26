@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>canvas_base.html</title>
+</head>
+
+<body>
+    <section>
+        <h1>おえかき</h1>
+        <nav>
+            <!-- 線の色を変更するカラーピッカーHTML要素[id=color] -->
+            <input type="color" id="color" value="#ccc">
+
+            <!-- 線の太さを変更するスライダーHTML要素[id=range] -->
+            <input type="range" id="range" min="1" max="10" value="3">
+            <button id="clear_btn">クリアー</button>
+        </nav>
+        <canvas id="drowarea" width="500" height="500" style="border:1px solid blue;"></canvas>
+    </section>
+
+
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script>
+        //初期化(変数letで宣言)
+        let canvas_mouse_event = false; //スイッチ [ true=線を引く, false=線は引かない ]  ＊＊＊
+        let oldX = 0; //１つ前の座標を代入するための変数
+        let oldY = 0; //１つ前の座標を代入するための変数
+        let bold_line = 3; //ラインの太さをここで指定[スライダー値をここにいれる、代入]
+        let color = "#ccc"; //ラインの色をここで指定[スライダー値をここにいれる]
+
+        //------------------------------------------------
+        const can = $("#drowarea")[0]; //CanvasElement
+        const ctx = can.getContext("2d"); //描画するための準備！
+        //------------------------------------------------
+        //上2つのスクリプトを記述します。
+
+
+        //mousedown：フラグをTrue
+        //-----------------------------------------------
+        //oldX = e.offsetX;       //MOUSEDOWNしたX横座標取得
+        //oldY = e.offsetY; //MOUSEDOWN Y高さ座標取得
+        //canvas_mouse_event=true;
+        //-----------------------------------------------
+        //上5つのスクリプトを記述します。
+
+    $(can).on("mousedown", function(e){
+        oldX = e.offsetX;       //MOUSEDOWNしたX横座標取得
+        oldY = e.offsetY; //MOUSEDOWN Y高さ座標取得
+        canvas_mouse_event=true; //スイッチを入れる
+    });
+
+
+        //mousemove：フラグがTrueだったら描く ※e：イベント引数取得
+        //----------------------------------------------
+        $(can).on("mousemove", function(e){
+            //console.log(e);
+            if(canvas_mouse_event==true){
+                const px = e.offsetX;
+                const py = e.offsetY; //次の座標をとる
+                ctx.strokeStyle = color; //css
+                ctx.lineWidth = bold_line; //3 
+                ctx.beginPath();    //初期化
+                ctx.lineJoin= "round"; //
+                ctx.lineCap = "round"; //ペン先をまるくする
+                ctx.moveTo(oldX, oldY); //線の開始
+                ctx.lineTo(px, py); //線の終了
+                ctx.stroke();
+                oldX = px; //新しい座標を古い座標に入れ替える
+                oldY = py; //同上
+            }
+        });
+
+
+        //mouseup：フラグをfalse
+        //------------------------------------------------
+        //    canvas_mouse_event=false;
+        //------------------------------------------------
+        $(can).on("mouseup", function(){
+            canvas_mouse_event=false;
+        });
+
+        //#clear_btn：クリアーボタンAction
+        //-----------------------------------------------------------------
+        //    ctx.beginPath();
+        //    ctx.clearRect(0, 0, can.width, can.height);
+        //-----------------------------------------------------------------
+        $("#clear_btn").on("click", function(){
+           ctx.beginPath();
+           ctx.clearRect(0, 0, can.width, can.height);
+        });
+
+        // カラーピッカーの変更イベント
+        $("#color").on("input", function () {
+            color = $(this).val();
+        });
+
+        // スライダーの変更イベント
+        $("#range").on("input", function () {
+            bold_line = $(this).val();
+        });
+    </script>
+</body>
+
+</html>
