@@ -165,6 +165,7 @@ header {
 .hero img {
     width: 100%;
     height: auto;
+    object-fit: cover;
 }
 
 /* プロフィールセクション */
@@ -205,25 +206,46 @@ header {
     color: #333;
     padding: 20px;
     border-radius: 8px;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    position: relative;
+    overflow: hidden;
 }
 
 .item:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    background-color: #ffe3e3;
 }
 
 .item img {
     width: 100%;
     height: auto;
     border-radius: 8px;
-    margin-bottom: 1em;
+    transition: opacity 0.3s;
 }
 
-.uniform-image {
+.item:hover img {
+    opacity: 0.8;
+}
+
+.item .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
-    border-radius: 8px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.item:hover .overlay {
+    opacity: 1;
 }
 
 /* セクションスタイル */
@@ -303,3 +325,4 @@ footer {
         line-height: 60px;
     }
 }
+
